@@ -1,4 +1,12 @@
-MIT License
+# Stars Without Number Toolbox
+
+The SWN Toolbox is a collection of JavaScript files designed to speed up random generation of various Stars Without Number things.
+
+These files need to be loaded into HTML files - for an example, see https://www.orffenspace.com/swn/swn-toolbox/.
+
+## License
+
+The Stars Without Number Toolbox is licensed under the MIT License:
 
 Copyright (c) 2017 Steve Simenic
 
