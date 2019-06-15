@@ -26,16 +26,6 @@ var genders = [
     "Male",
     "Female"
 ];
-var cultures = [
-    "Arabic",
-    "Chinese",
-    "English",
-    "Indian",
-    "Japanese",
-    "Nigerian",
-    "Russian",
-    "Spanish"
-];
 var ages = [
     "Young",
     "Middle-aged",
@@ -103,10 +93,9 @@ var quirks = [
 function generateNPC() {
     var gender = genders[Math.floor(Math.random() * genders.length)];
     var age = ages[Math.floor(Math.random() * ages.length)];
-    var culture = cultures[Math.floor(Math.random() * cultures.length)];
     var height = heights[Math.floor(Math.random() * heights.length)];
     var problem = problems[Math.floor(Math.random() * problems.length)];
     var jobMotivation = jobMotivations[Math.floor(Math.random() * jobMotivations.length)];
     var quirk = quirks[Math.floor(Math.random() * quirks.length)];
-    return [gender, age, culture, height, problem, jobMotivation, quirk];
+    return [gender, age, height, problem, jobMotivation, quirk];
 }
