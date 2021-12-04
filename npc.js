@@ -100,7 +100,7 @@ var characterTraits = [
   "Sham"
 ];
 
-function generateNpc() {
+function generateNpc () {
   var background = Math.floor(Math.random() * backgrounds.length);
   var role = Math.floor(Math.random() * roles.length);
   var problem = Math.floor(Math.random() * problems.length);

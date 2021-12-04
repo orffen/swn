@@ -103,7 +103,7 @@ var twists = [
   "Actually, there is no twist. It's all exactly as it seems."
 ];
 
-function generateProblem() {
+function generateProblem () {
   var conflictsKeys = Object.keys(conflicts);
   var conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
   var situation = conflicts[conflict][0][Math.floor(Math.random() * conflicts[conflict][0].length)];

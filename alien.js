@@ -66,7 +66,7 @@ var socialStructures = [
 ];
 
 
-function generateAlien() {
+function generateAlien () {
   var bodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
   if (bodyTrait === "Hybrid") {
     let numberBodyTraits = [2, 2, 3][Math.floor(Math.random() * 3)]; // generate 2 templates twice as often as 3

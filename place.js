@@ -126,7 +126,7 @@ var wildernessOngoings = [
   "A shell of a building remains"
 ];
 
-function generatePlace() {
+function generatePlace () {
   var hazardsKeys = Object.keys(hazards);
   var hazard = hazardsKeys[Math.floor(Math.random() * hazardsKeys.length)];
   var specificExample = hazards[hazard][0][Math.floor(Math.random() * hazards[hazard][0].length)];
