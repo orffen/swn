@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 Steve Simenic <orffen@orffenspace.com>
+ * Copyright (c) 2021 Steve Simenic <orffen@orffenspace.com>
  *
  * This file is part of the SWN Toolbox.
  *
@@ -22,28 +22,68 @@
  * THE SOFTWARE.
  */
 
-var bodyTypes        = ["Humanlike", "Avian", "Reptilian", "Insectile", "Exotic", "Hybrid"];
-var lenses           = ["Collectivity", "Curiosity", "Despair", "Domination", "Faith", "Fear", "Gluttony", "Greed", "Hate", "Honor", "Journeying", "Joy", "Pacifism", "Pride", "Sagacity", "Subtlety", "Tradition", "Treachery", "Tribalism", "Wrath"];
-var socialStructures = ["Democratic", "Monarchic", "Tribal", "Oligarchic", "Multipolar", "Multipolar"];
+var bodyTraits = [
+  "Avian, bat-like, or pterodactylian",
+  "Reptilian, amphibian, or draconic",
+  "Insectile, beetle-like, spiderish, or wasp-like",
+  "Mammalian, furred or bare-skinned",
+  "Exotic, composed of some novel substance",
+  "Hybrid"
+];
+
+var lenses = [
+  "Collectivity"
+  "Curiosity"
+  "Despair"
+  "Domination"
+  "Faith"
+  "Fear"
+  "Gluttony"
+  "Greed"
+  "Hate"
+  "Honor"
+  "Journeying"
+  "Joy"
+  "Pacifism"
+  "Pride"
+  "Sagacity"
+  "Subtlety"
+  "Tradition"
+  "Treachery"
+  "Tribalism"
+  "Wrath"
+];
+
+var socialStructures = [
+  "Democratic",
+  "Monarchic",
+  "Tribal",
+  "Oligarchic",
+  "Multipolar Competitive",
+  "Multipolar Competitive",
+  "Multipolar Cooperative",
+  "Multipolar Cooperative"
+];
+
 
 function generateAlien() {
-    var bodyType        = bodyTypes[Math.floor(Math.random() * bodyTypes.length)];
-    var lens            = [];
-    var socialStructure = socialStructures[Math.floor(Math.random() * socialStructures.length)];
-    if (bodyType == "Hybrid") {
-        let numberBodyTypes = [2, 2, 3][Math.floor(Math.random() * 3)]; // generate 2 templates twice as often as 3
-        let tempBodyTypes = new Set();
-        while (tempBodyTypes.size < numberBodyTypes) {
-            let newBodyType = bodyTypes[Math.floor(Math.random() * bodyTypes.length)];
-            if (newBodyType != "Hybrid") { // don't allow another 'Hybrid' bodyType to be added
-                tempBodyTypes.add(newBodyType);
-            }
-        }
-        bodyType = [...tempBodyTypes].join("/"); // convert to string for output
+  var bodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
+  if (bodyTrait === "Hybrid") {
+    let numberBodyTraits = [2, 2, 3][Math.floor(Math.random() * 3)]; // generate 2 templates twice as often as 3
+    let tempBodyTraits = new Set();
+    while (tempBodyTraits.size < numberBodyTraits) {
+      let newBodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
+      if (newBodyTrait != "Hybrid") { // don't allow another 'Hybrid' bodyTrait to be added
+        tempBodyTraits.add(newBodyTrait);
+      }
     }
-    var limit           = [1, 2, 2, 3, 4][(Math.floor(Math.random() * 5))];
-    for (let index = 0; index < limit; index++) {
-        lens.push(lenses[Math.floor(Math.random() * lenses.length)]);
-    }
-    return [bodyType, lens, socialStructure];
+    bodyTrait = [...tempBodyTraits].join("/"); // convert to string for output
+  }
+  var lens = [];
+  var limit = [1, 2, 2, 3, 4][(Math.floor(Math.random() * 5))];
+  for (let index = 0; index < limit; index++) {
+    lens.push(lenses[Math.floor(Math.random() * lenses.length)]);
+  }
+  var socialStructure = socialStructures[Math.floor(Math.random() * socialStructures.length)];
+  return [bodyTrait, lens, socialStructure];
 }
