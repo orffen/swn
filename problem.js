@@ -22,29 +22,40 @@
  * THE SOFTWARE.
  */
 
-var conflicts = ["Money", "Revenge", "Power", "Natural Danger", "Religion", "Ideology", "Ethnicity", "Resources"];
-
-var situations = [
-  ["Money is owed to a ruthless creditor", "Money was stolen from someone", "A sudden profit opportunity arises", "There's a hidden stash of wealth", "Money is offered from an evil source"],
-  ["Someone was murdered", "Someone was stripped of rank", "Someone lost all their wealth", "Someone lost someone's love", "Someone was framed for a crime"],
-  ["An influential political leader", "A stern community elder", "A ruling patriarch of a large family", "A star expert in a particular industry", "A criminal boss or outcast leader"],
-  ["A cyclical planetary phenomenon", "A sudden natural disaster", "Sudden loss of vital infrastructure", "Catastrophe from outside meddling", "Formerly-unknown planetary peril"],
-  ["Sects that hate each other bitterly", "Zealot reformers forcing new things", "Radical traditionalists fighting back", "Ethnic religious divisions", "Corrupt and decadent institutions"],
-  ["A universally-despised fringe group", "Terrorists with widespread support", "A political party's goon squads", "Dead-end former regime supporters", "Ruthless ascendant political group"],
-  ["A traditionally subordinate group", "An ethnic group from offworld", "A dominant caste or ethnicity", "An alien or transhuman group", "Two groups that hate each other"],
-  ["There's a cache of illegal materials", "A hidden strike of rare resources", "Cargo has been abandoned as lost", "Land ownership is disputed", "A resource is desperately necessary"]
-];
-
-var focuses = [
-  ["Organized crime wants it", "Corrupt officials want it", "A sympathetic NPC needs it", "The PCs are owed it", "It will disappear very soon"],
-  ["It was wholly justified", "The wrong person is targeted", "The reaction is excessive", "The PCs are somehow blamed", "Both sides were wronged"],
-  ["They've betrayed their own", "Someone's gunning for them", "They made a terrible choice", "They usurped their position", "They're oppressing their own"],
-  ["Anti-helpful bureaucrats", "Religious zealots panic", "Bandits and looters strike", "The government hushes it up", "There's money in exploiting it"],
-  ["Charismatic new leader", "Mandatory state religion", "Heavy foreign influence", "Religious purging underway", "Fighting for holy ground"],
-  ["Terrorist attack", "Street rioting", "Police state crackdown", "Forced expulsions", "Territory under hostile rule"],
-  ["Forced immigration", "Official ethnic ghettos", "Rigid separation of groups", "Group statuses have changed", "Rising ethnic violence"],
-  ["Someone thinks they own it", "The state is looking for it", "It has its own protectors", "Rights to it were stolen", "Offworlders want it badly"]
-];
+var conflicts = {
+  "Money": [
+    ["Money is owed to a ruthless creditor", "Money was stolen from someone", "A sudden profit opportunity arises", "There's a hidden stash of wealth", "Money is offered from an evil source"],
+    ["Organized crime wants it", "Corrupt officials want it", "A sympathetic NPC needs it", "The PCs are owed it", "It will disappear very soon"]
+  ],
+  "Revenge": [
+    ["Someone was murdered", "Someone was stripped of rank", "Someone lost all their wealth", "Someone lost someone's love", "Someone was framed for a crime"],
+    ["It was wholly justified", "The wrong person is targeted", "The reaction is excessive", "The PCs are somehow blamed", "Both sides were wronged"]
+  ],
+  "Power": [
+    ["An influential political leader", "A stern community elder", "A ruling patriarch of a large family", "A star expert in a particular industry", "A criminal boss or outcast leader"],
+    ["They've betrayed their own", "Someone's gunning for them", "They made a terrible choice", "They usurped their position", "They're oppressing their own"]
+  ],
+  "Natural Danger": [
+    ["A cyclical planetary phenomenon", "A sudden natural disaster", "Sudden loss of vital infrastructure", "Catastrophe from outside meddling", "Formerly-unknown planetary peril"],
+    ["Anti-helpful bureaucrats", "Religious zealots panic", "Bandits and looters strike", "The government hushes it up", "There's money in exploiting it"]
+  ],
+  "Religion": [
+    ["Sects that hate each other bitterly", "Zealot reformers forcing new things", "Radical traditionalists fighting back", "Ethnic religious divisions", "Corrupt and decadent institutions"],
+    ["Charismatic new leader", "Mandatory state religion", "Heavy foreign influence", "Religious purging underway", "Fighting for holy ground"]
+  ],
+  "Ideology": [
+    ["A universally-despised fringe group", "Terrorists with widespread support", "A political party's goon squads", "Dead-end former regime supporters", "Ruthless ascendant political group"],
+    ["Terrorist attack", "Street rioting", "Police state crackdown", "Forced expulsions", "Territory under hostile rule"]
+  ],
+  "Ethnicity": [
+    ["A traditionally subordinate group", "An ethnic group from offworld", "A dominant caste or ethnicity", "An alien or transhuman group", "Two groups that hate each other"],
+    ["Forced immigration", "Official ethnic ghettos", "Rigid separation of groups", "Group statuses have changed", "Rising ethnic violence"]
+  ],
+  "Resources": [
+    ["There's a cache of illegal materials", "A hidden strike of rare resources", "Cargo has been abandoned as lost", "Land ownership is disputed", "A resource is desperately necessary"]
+    ["Someone thinks they own it", "The state is looking for it", "It has its own protectors", "Rights to it were stolen", "Offworlders want it badly"]
+  ]
+};
 
 var restraints = [
   "The government is cracking down on the conflict",
@@ -93,11 +104,11 @@ var twists = [
 ];
 
 function generateProblem() {
-  var conflict = Math.floor(Math.random() * conflicts.length);
-  var conflictType = conflicts[conflict];
-  var situation = situations[conflict][Math.floor(Math.random() * situations[conflict].length)];
-  var focus = focuses[conflict][Math.floor(Math.random() * focuses[conflict].length)];
-  var restraint = Math.floor(Math.random() * restraints.length);
-  var twist = Math.floor(Math.random() * twists.length);
-  return [conflictType, situation, focus, restraint, twist];
+  var conflictsKeys = Object.keys(conflicts);
+  var conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
+  var situation = conflicts[conflict][0][Math.floor(Math.random() * conflicts[conflict][0].length)];
+  var focus = conflicts[conflict][1][Math.floor(Math.random() * conflicts[conflict][1].length)];
+  var restraint = restraints[Math.floor(Math.random() * restraints.length)];
+  var twist = twists[Math.floor(Math.random() * twists.length)];
+  return [conflict, situation, focus, restraint, twist];
 }
