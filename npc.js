@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 Steve Simenic <orffen@orffenspace.com>
+ * Copyright (c) 2021 Steve Simenic <orffen@orffenspace.com>
  * 
  * This file is part of the SWN Toolbox.
  * 
@@ -22,80 +22,90 @@
  * THE SOFTWARE.
  */
 
-var genders = [
-    "Male",
-    "Female"
-];
-var ages = [
-    "Young",
-    "Middle-aged",
-    "Old"
-];
-var heights = [
-    "Very Short",
-    "Short",
-    "Short",
-    "Average height",
-    "Average height",
-    "Tall",
-    "Tall",
-    "Very Tall"
-];
-var problems = [
-    "Grudge against local authorities",
-    "Has a secret kept from their family",
-    "Chronic illness",
-    "Enmity of a local psychic",
-    "Has enemies at work",
-    "Owes loan sharks",
-    "Threatened with loss of spouse, sibling, or child",
-    "Close relative in trouble with the law",
-    "Drug or behavioral addict",
-    "Blackmailed by enemy"
-];
-var jobMotivations = [
-    "Greed, because nothing else they can do pays better",
-    "Idealistic about the job",
-    "Sense of social duty",
-    "Force of habit takes them through the day",
-    "Seeks to please another",
-    "Feels inadequate as anything else",
-    "Family tradition",
-    "Religious obligation or vow",
-    "Nothing better to do, and they need the money",
-    "They're quitting at the first good opportunity",
-    "It's a stepping stone to better things",
-    "Spite against an enemy discomfited by the work"
-];
-var quirks = [
-    "Bald",
-    "Terrible taste in clothing",
-    "Very thin",
-    "Powerful build",
-    "Bad eyesight, wears spectacles",
-    "Carries work tools constantly",
-    "Long hair",
-    "Bearded, if male; ankle-length hair if female",
-    "Scars all over hands",
-    "Missing digits or an ear",
-    "Smells like their work",
-    "Repeats himself constantly",
-    "Talks about tabloid articles",
-    "Booming voice",
-    "Vocal dislike of offworlders",
-    "Always snuffling",
-    "Missing teeth",
-    "Fastidiously neat",
-    "Wears religious emblems",
-    "Speaks as little as possible"
+var backgrounds = [
+  "The local underclass or poorest natives",
+  "Common laborers or cube workers",
+  "Aspiring bourgeoise or upper class",
+  "The elite of this society",
+  "Minority or foreigners",
+  "Offworlders or exotics"
 ];
 
-function generateNPC() {
-    var gender = genders[Math.floor(Math.random() * genders.length)];
-    var age = ages[Math.floor(Math.random() * ages.length)];
-    var height = heights[Math.floor(Math.random() * heights.length)];
-    var problem = problems[Math.floor(Math.random() * problems.length)];
-    var jobMotivation = jobMotivations[Math.floor(Math.random() * jobMotivations.length)];
-    var quirk = quirks[Math.floor(Math.random() * quirks.length)];
-    return [gender, age, height, problem, jobMotivation, quirk];
+var roles = [
+  "Criminal, thug, thief, swindler",
+  "Menial, cleaner, retail worker, servant",
+  "Unskilled heavy labor, porter, construction",
+  "Skilled trade, electrician, mechanic, pilot",
+  "Idea worker, programmer, writer",
+  "Merchant, business owner, trader, banker",
+  "Official, bureaucrat, courtier, clerk",
+  "Military, soldier, enforcer, law officer"
+];
+
+var problems = [
+  "They have significant debt or money woes",
+  "A loved one is in trouble; reroll for it",
+  "Romantic failure with a desired person",
+  "Drug or behavioral addiction",
+  "Their superior dislikes or resents them",
+  "They have a persistent sickness",
+  "They hate their job or life situation",
+  "Someone dangerous is targeting them",
+  "They're pursuing a disastrous purpose",
+  "They have no problems worth mentioning"
+];
+
+var ages = [
+  "Unusually young or old for their role",
+  "Young adult",
+  "Mature prime",
+  "Middle-aged or elderly"
+];
+
+var desires = [
+  "They want a particular romantic partner",
+  "They want money for them or a loved one",
+  "They want a promotion in their job",
+  "They want answers about a past trauma",
+  "They want revenge on an enemy",
+  "They want to help a beleaguered friend",
+  "They want an entirely different job",
+  "They want protection from an enemy",
+  "They want to leave their current life",
+  "They want fame and glory",
+  "They want power over those around them",
+  "They have everything they want from life"
+];
+
+var characterTraits = [
+  "Ambition",
+  "Avarice",
+  "Bitterness",
+  "Courage",
+  "Cowardice",
+  "Curiosity",
+  "Deceitfulness",
+  "Determination",
+  "Devotion to a cause",
+  "Filiality",
+  "Hatred",
+  "Honesty",
+  "Hopefulness",
+  "Love of a person",
+  "Nihilism",
+  "Paternalism",
+  "Pessimism",
+  "Protectiveness",
+  "Resentment",
+  "Sham"
+];
+
+function generateNpc() {
+  var background = Math.floor(Math.random() * backgrounds.length);
+  var role = Math.floor(Math.random() * roles.length);
+  var problem = Math.floor(Math.random() * problems.length);
+  var age = Math.floor(Math.random() * ages.length);
+  var desire = Math.floor(Math.random() * desires.length);
+  var characterTrait = Math.floor(Math.random() * characterTraits.length);
+  return [background, role, problem, age, desire, characterTrait];
 }
