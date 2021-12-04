@@ -73,7 +73,7 @@ function generateAlien () {
     let tempBodyTraits = new Set();
     while (tempBodyTraits.size < numberBodyTraits) {
       let newBodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
-      if (newBodyTrait != "Hybrid") { // don't allow another 'Hybrid' bodyTrait to be added
+      if (newBodyTrait !== "Hybrid") { // don't allow another 'Hybrid' bodyTrait to be added
         tempBodyTraits.add(newBodyTrait);
       }
     }
