@@ -1,8 +1,8 @@
 # Stars Without Number Toolbox
 
-The SWN Toolbox is a collection of JavaScript files designed to speed up random generation of various Stars Without Number things.
+The SWN Toolbox is a collection of JavaScript files designed to speed up random generation of various Stars Without Number things. It is for the Revised edition of the game.
 
-Stars Without Number © 2010, Sine Nomine Publishing and is written by Kevin Crawford. Grab the free rules [here](https://www.drivethrurpg.com/product/86467/Stars-Without-Number-Free-Edition).
+Stars Without Number ©2017 Sine Nomine Publishing, Inc. and is written by Kevin Crawford. Grab the free rules [here](https://www.drivethrurpg.com/product/230009/Stars-Without-Number-Revised-Edition-Free-Version).
 
 These files need to be loaded into HTML files - for an example, see https://www.orffenspace.com/swn/swn-toolbox/.
 
@@ -10,7 +10,7 @@ These files need to be loaded into HTML files - for an example, see https://www.
 
 The Stars Without Number Toolbox is licensed under the MIT License:
 
-Copyright (c) 2017 Steve Simenic
+Copyright (c) 2021 Steve Simenic
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
