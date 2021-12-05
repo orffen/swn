@@ -122,7 +122,7 @@ function generateCharacter () {
   let characterClassesKeys = Object.keys(characterClasses);
   let characterClass = characterClassesKeys[Math.floor(Math.random() * characterClassesKeys.length)];
   let characterStatistics = [...characterClasses[characterClass]];
-  characterStatistics[6] += Math.floor(Math.random() * 6 + 1); // roll HD
+  characterStatistics[6] += Math.floor(Math.random() * 6) + 1; // roll HD
   let backgroundKeys = Object.keys(backgrounds);
   let characterBackground = backgroundKeys[Math.floor(Math.random() * backgroundKeys.length)];
   let characterSkills = [...backgrounds[characterBackground]];
