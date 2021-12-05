@@ -22,6 +22,14 @@
  * THE SOFTWARE.
  */
 
+var npcTypes = {
+  "Peaceful Human": [1, "10", "+0", "Unarmed", "10m", "6", "+1", "15+"],
+  "Martial Human": [1, "10", "+1", "By weapon", "10m", "8", "+1", "15+"],
+  "Veteran Fighter": [2, "14", "+2", "By weapon +1", "10m", "9", "+1", "14+"],
+  "Elite Fighter": [3, "16 (combat)", "+4", "By weapon +1", "10m", "10", "+2", "14+"],
+  "Heroic Fighter": [6, "16 (combat)", "+8", "By weapon +3", "10m", "11", "+3", "12+"]
+};
+
 var backgrounds = [
   "The local underclass or poorest natives",
   "Common laborers or cube workers",
@@ -107,5 +115,11 @@ function generateNPC () {
   var age = ages[Math.floor(Math.random() * ages.length)];
   var desire = desires[Math.floor(Math.random() * desires.length)];
   var characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
-  return [background, role, problem, age, desire, characterTrait];
+  var statistics = npcTypes["Peaceful Human"];
+  if (role === "Criminal, thug, thief, swindler") {
+    statistics = npcTypes["Martial Human"];
+  } else if (role === "Military, soldier, enforcer, law officer") {
+    statistics = npcTypes["Veteran Fighter"];
+  }
+  return [statistics, background, role, problem, age, desire, characterTrait];
 }
