@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-var beastTypes = {
+let beastTypes = {
   "Small Vicious Beast": ["1 HP", "14", "+1", "1d2", "10m", "7", "+1", "15+"],
   "Small Pack Hunter": ["1", "13", "+1", "1d4", "15m", "8", "+1", "15+"],
   "Large Pack Hunter": ["2", "14", "+2", "1d6", "15m", "9", "+1", "14+"],
@@ -33,7 +33,7 @@ var beastTypes = {
   "Gengineered Murder Beast": ["10", "18", "+10 x4", "1d10 each", "20m", "11 +3", "10+"]
 };
 
-var basicAnimalFeatures = [
+let basicAnimalFeatures = [
   "Amphibian, froggish or newtlike",
   "Bird, winged and feathered",
   "Fish, scaled and torpedo-bodied",
@@ -45,17 +45,17 @@ var basicAnimalFeatures = [
   "Twice"
 ];
 
-var bodyPlans = ["Humanoid", "Quadruped", "Many-legged", "Bulbous", "Amorphous", "Twice"];
+let bodyPlans = ["Humanoid", "Quadruped", "Many-legged", "Bulbous", "Amorphous", "Twice"];
 
-var limbNovelties = ["Wings", "Many joints", "Tentacles", "Opposable thumbs", "Retractable", "Varying sizes"];
+let limbNovelties = ["Wings", "Many joints", "Tentacles", "Opposable thumbs", "Retractable", "Varying sizes"];
 
-var skinNovelties = ["Hard shell", "Exoskeleton", "Odd texture", "Molts regularly", "Harmful to touch", "Wet or slimy"];
+let skinNovelties = ["Hard shell", "Exoskeleton", "Odd texture", "Molts regularly", "Harmful to touch", "Wet or slimy"];
 
-var mainWeapons = ["Teeth or mandibles", "Claws", "Poison", "Harmful discharge", "Pincers", "Horns"];
+let mainWeapons = ["Teeth or mandibles", "Claws", "Poison", "Harmful discharge", "Pincers", "Horns"];
 
-var sizes = ["Cat-sized", "Wolf-sized", "Calf-sized", "Bull-sized", "Hippo-sized", "Elephant-sized"];
+let sizes = ["Cat-sized", "Wolf-sized", "Calf-sized", "Bull-sized", "Hippo-sized", "Elephant-sized"];
 
-var behavioralTraits = {
+let behavioralTraits = {
   "Predator": [
     "Hunts in kin-group packs",
     "Favors ambush attacks",
@@ -88,7 +88,7 @@ var behavioralTraits = {
   ]
 };
 
-var harmfulDischarges = [
+let harmfulDischarges = [
   "Acidic spew doing its damage on a hit",
   "Toxic spittle or cloud",
   "Super-heated or super-chilled spew",
@@ -99,17 +99,17 @@ var harmfulDischarges = [
   "Explosive pellets or chemical catalysts"
 ];
 
-var poisonEffects = ["Death", "Paralysis", "1d4 dmg per onset interval", "Convulsions", "Blindness", "Hallucinations"];
+let poisonEffects = ["Death", "Paralysis", "1d4 dmg per onset interval", "Convulsions", "Blindness", "Hallucinations"];
 
-var poisonOnsets = ["Instant", "1 round", "1d6 rounds", "1 minute", "1d6 minutes", "1 hour"];
+let poisonOnsets = ["Instant", "1 round", "1d6 rounds", "1 minute", "1d6 minutes", "1 hour"];
 
-var poisonDurations = ["1d6 rounds", "1 minute", "10 minutes", "1 hour", "1d6 hours", "1d6 days"];
+let poisonDurations = ["1d6 rounds", "1 minute", "10 minutes", "1 hour", "1d6 hours", "1d6 days"];
 
 
 function generateBeast () {
-  var beastKeys = Object.keys(beastTypes);
-  var beastType = beastKeys[Math.floor(Math.random() * beastKeys.length)];
-  var basicAnimalFeature = basicAnimalFeatures[Math.floor(Math.random() * basicAnimalFeatures.length)];
+  let beastKeys = Object.keys(beastTypes);
+  let beastType = beastKeys[Math.floor(Math.random() * beastKeys.length)];
+  let basicAnimalFeature = basicAnimalFeatures[Math.floor(Math.random() * basicAnimalFeatures.length)];
   if (basicAnimalFeature === "Twice") {
     let tempAnimalFeatures = new Set();
     while (tempAnimalFeatures.size < 2) {
@@ -120,7 +120,7 @@ function generateBeast () {
     }
     basicAnimalFeature = [...tempAnimalFeatures].join("/"); // convert to string for output
   }
-  var bodyPlan = bodyPlans[Math.floor(Math.random() * bodyPlans.length)];
+  let bodyPlan = bodyPlans[Math.floor(Math.random() * bodyPlans.length)];
   if (bodyPlan === "Twice") {
     let tempBodyPlans = new Set();
     while (tempBodyPlans.size < 2) {
@@ -131,15 +131,15 @@ function generateBeast () {
     }
     bodyPlan = [...tempBodyPlans].join("/"); // convert to string for output
   }
-  var limbNovelty = limbNovelties[Math.floor(Math.random() * limbNovelties.length)];
-  var skinNovelty = skinNovelties[Math.floor(Math.random() * skinNovelties.length)];
-  var mainWeapon = mainWeapons[Math.floor(Math.random() * mainWeapons.length)];
-  var size = sizes[Math.floor(Math.random() * sizes.length)];
-  var behaviorKeys = Object.keys(behavioralTraits);
-  var behavior = behaviorKeys[Math.floor(Math.random() * behaviorKeys.length)];
-  var behaviorTrait = behavioralTraits[behavior][Math.floor(Math.random() * behavioralTraits[behavior].length)];
-  var harmfulDischarge = harmfulDischarges[Math.floor(Math.random() * harmfulDischarges.length)];
-  var poison = ["None", "None", "None"];
+  let limbNovelty = limbNovelties[Math.floor(Math.random() * limbNovelties.length)];
+  let skinNovelty = skinNovelties[Math.floor(Math.random() * skinNovelties.length)];
+  let mainWeapon = mainWeapons[Math.floor(Math.random() * mainWeapons.length)];
+  let size = sizes[Math.floor(Math.random() * sizes.length)];
+  let behaviorKeys = Object.keys(behavioralTraits);
+  let behavior = behaviorKeys[Math.floor(Math.random() * behaviorKeys.length)];
+  let behaviorTrait = behavioralTraits[behavior][Math.floor(Math.random() * behavioralTraits[behavior].length)];
+  let harmfulDischarge = harmfulDischarges[Math.floor(Math.random() * harmfulDischarges.length)];
+  let poison = ["None", "None", "None"];
   if (harmfulDischarge === "Toxic spittle or cloud") {
     let effect = poisonEffects[Math.floor(Math.random() * poisonEffects.length)];
     let onset = poisonOnsets[Math.floor(Math.random() * poisonOnsets.length)];
