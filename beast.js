@@ -99,51 +99,67 @@ const beastHarmfulDischarges = [
   "Explosive pellets or chemical catalysts"
 ];
 
-const beastPoisonEffects = ["Death", "Paralysis", "1d4 dmg per onset interval", "Convulsions", "Blindness", "Hallucinations"];
+const beastPoisonEffects = ["death", "paralysis", "1d4 dmg per onset interval", "convulsions", "blindness", "hallucinations"];
 
-const beastPoisonOnsets = ["Instant", "1 round", "1d6 rounds", "1 minute", "1d6 minutes", "1 hour"];
+const beastPoisonOnsets = ["instantly", "1 round", "1d6 rounds", "1 minute", "1d6 minutes", "1 hour"];
 
 const beastPoisonDurations = ["1d6 rounds", "1 minute", "10 minutes", "1 hour", "1d6 hours", "1d6 days"];
 
 function Beast () {
   let beastKeys = Object.keys(beastTypes);
-  let beastType = beastKeys[Math.floor(Math.random() * beastKeys.length)];
-  let basicAnimalFeature = beastAnimalFeatures[Math.floor(Math.random() * beastAnimalFeatures.length)];
-  if (basicAnimalFeature === "Twice") {
+  this.type = beastKeys[Math.floor(Math.random() * beastKeys.length)];
+  this.animalFeature = beastAnimalFeatures[Math.floor(Math.random() * beastAnimalFeatures.length)];
+  if (this.animalFeature === "Twice") {
     let tempAnimalFeatures = new Set();
     while (tempAnimalFeatures.size < 2) {
       let newAnimalFeature = beastAnimalFeatures[Math.floor(Math.random() * beastAnimalFeatures.length)];
-      if (newAnimalFeature !== "Twice") { // don't allow another 'Twice' basicAnimalFeature to be added
+      if (newAnimalFeature !== "Twice") { // don't allow another 'Twice' beastAnimalFeature to be added
         tempAnimalFeatures.add(newAnimalFeature);
       }
     }
-    basicAnimalFeature = [...tempAnimalFeatures].join("/"); // convert to string for output
+    this.animalFeature = [...tempAnimalFeatures].join("/"); // convert to string for output
   }
-  let bodyPlan = beastBodyPlans[Math.floor(Math.random() * beastBodyPlans.length)];
-  if (bodyPlan === "Twice") {
+  this.bodyPlan = beastBodyPlans[Math.floor(Math.random() * beastBodyPlans.length)];
+  if (this.bodyPlan === "Twice") {
     let tempBodyPlans = new Set();
     while (tempBodyPlans.size < 2) {
       let newBodyPlan = beastBodyPlans[Math.floor(Math.random() * beastBodyPlans.length)];
-      if (newBodyPlan !== "Twice") { // don't allow another 'Twice' bodyPlan to be added
+      if (newBodyPlan !== "Twice") { // don't allow another 'Twice' beastBodyPlan to be added
         tempBodyPlans.add(newBodyPlan);
       }
     }
-    bodyPlan = [...tempBodyPlans].join("/"); // convert to string for output
+    this.bodyPlan = [...tempBodyPlans].join("/"); // convert to string for output
   }
-  let limbNovelty = beastLimbNovelties[Math.floor(Math.random() * beastLimbNovelties.length)];
-  let skinNovelty = beastSkinNovelties[Math.floor(Math.random() * beastSkinNovelties.length)];
-  let mainWeapon = beastMainWeapons[Math.floor(Math.random() * beastMainWeapons.length)];
-  let size = beastSizes[Math.floor(Math.random() * beastSizes.length)];
+  this.limbNovelty = beastLimbNovelties[Math.floor(Math.random() * beastLimbNovelties.length)];
+  this.skinNovelty = beastSkinNovelties[Math.floor(Math.random() * beastSkinNovelties.length)];
+  this.mainWeapon = beastMainWeapons[Math.floor(Math.random() * beastMainWeapons.length)];
+  this.size = beastSizes[Math.floor(Math.random() * beastSizes.length)];
   let behaviorKeys = Object.keys(beastBehavioralTraits);
-  let behavior = behaviorKeys[Math.floor(Math.random() * behaviorKeys.length)];
-  let behaviorTrait = beastBehavioralTraits[behavior][Math.floor(Math.random() * beastBehavioralTraits[behavior].length)];
-  let harmfulDischarge = beastHarmfulDischarges[Math.floor(Math.random() * beastHarmfulDischarges.length)];
-  let poison = ["None", "None", "None"];
-  if (harmfulDischarge === "Toxic spittle or cloud") {
+  this.behavior = behaviorKeys[Math.floor(Math.random() * behaviorKeys.length)];
+  this.behaviorTrait = beastBehavioralTraits[this.behavior][Math.floor(Math.random() * beastBehavioralTraits[this.behavior].length)];
+  this.harmfulDischarge = beastHarmfulDischarges[Math.floor(Math.random() * beastHarmfulDischarges.length)];
+  this.poison = "None";
+  if (this.harmfulDischarge === "Toxic spittle or cloud") {
     let effect = beastPoisonEffects[Math.floor(Math.random() * beastPoisonEffects.length)];
     let onset = beastPoisonOnsets[Math.floor(Math.random() * beastPoisonOnsets.length)];
     let duration = beastPoisonDurations[Math.floor(Math.random() * beastPoisonDurations.length)];
-    poison = [effect, onset, duration];
+    if (effect.startsWith("1d4")) {
+      effect = effect.replace("1d4", Math.floor(Math.random() * 4) + 1);
+      if (onset === "instantly") {
+        onset = "(once, instantly)";
+      } else {
+        onset = "(every " + onset + ")";
+      }
+    } else if (onset.startsWith("1")) {
+      onset = "within " + onset;
+    }
+    onset = onset.replace("1d6", Math.floor(Math.random() * 6) + 1);
+    duration = duration.replace("1d6", Math.floor(Math.random() * 6) + 1);
+    if (effect === "death" || onset === "(once, instantly)") {
+      duration = "";
+    } else {
+      duration = ", for " + duration;
+    }
+    this.poison = "Causes " + effect + " " + onset + duration;
   }
-  return [beastType, beastTypes[beastType], basicAnimalFeature, bodyPlan, limbNovelty, skinNovelty, mainWeapon, size, behavior, behaviorTrait, harmfulDischarge, poison];
 }
