@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-var conflicts = {
+let conflicts = {
   "Money": [
     ["Money is owed to a ruthless creditor", "Money was stolen from someone", "A sudden profit opportunity arises", "There's a hidden stash of wealth", "Money is offered from an evil source"],
     ["Organized crime wants it", "Corrupt officials want it", "A sympathetic NPC needs it", "The PCs are owed it", "It will disappear very soon"]
@@ -52,12 +52,12 @@ var conflicts = {
     ["Forced immigration", "Official ethnic ghettos", "Rigid separation of groups", "Group statuses have changed", "Rising ethnic violence"]
   ],
   "Resources": [
-    ["There's a cache of illegal materials", "A hidden strike of rare resources", "Cargo has been abandoned as lost", "Land ownership is disputed", "A resource is desperately necessary"]
+    ["There's a cache of illegal materials", "A hidden strike of rare resources", "Cargo has been abandoned as lost", "Land ownership is disputed", "A resource is desperately necessary"],
     ["Someone thinks they own it", "The state is looking for it", "It has its own protectors", "Rights to it were stolen", "Offworlders want it badly"]
   ]
 };
 
-var restraints = [
+let restraints = [
   "The government is cracking down on the conflict",
   "One side seems invincibly stronger to the other",
   "Both sides have 'doomsday' info or devices",
@@ -80,7 +80,7 @@ var restraints = [
   "An outside power threatens both sides"
 ];
 
-var twists = [
+let twists = [
   "There's a very sharp time limit for any resolution",
   "The sympathetic side is actually a bunch of bastards",
   "There's an easy but very repugnant solution to hand",
@@ -104,11 +104,11 @@ var twists = [
 ];
 
 function generateProblem () {
-  var conflictsKeys = Object.keys(conflicts);
-  var conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
-  var situation = conflicts[conflict][0][Math.floor(Math.random() * conflicts[conflict][0].length)];
-  var focus = conflicts[conflict][1][Math.floor(Math.random() * conflicts[conflict][1].length)];
-  var restraint = restraints[Math.floor(Math.random() * restraints.length)];
-  var twist = twists[Math.floor(Math.random() * twists.length)];
+  let conflictsKeys = Object.keys(conflicts);
+  let conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
+  let situation = conflicts[conflict][0][Math.floor(Math.random() * conflicts[conflict][0].length)];
+  let focus = conflicts[conflict][1][Math.floor(Math.random() * conflicts[conflict][1].length)];
+  let restraint = restraints[Math.floor(Math.random() * restraints.length)];
+  let twist = twists[Math.floor(Math.random() * twists.length)];
   return [conflict, situation, focus, restraint, twist];
 }
