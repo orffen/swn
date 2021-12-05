@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-var trustworthinesses = [
+let trustworthinesses = [
   "They intend to totally screw the PCs",
   "They won't pay unless forced to do so",
   "They'll pay slowly or reluctantly",
@@ -31,7 +31,7 @@ var trustworthinesses = [
   "They'll pay more than they promised"
 ];
 
-var challenges = [
+let challenges = [
   "Kill somebody who might deserve it",
   "Kidnap someone dangerous",
   "Steal a well-guarded object",
@@ -42,7 +42,7 @@ var challenges = [
   "Guard an object being transported"
 ];
 
-var countervailingForces = [
+let countervailingForces = [
   "A treacherous employer or subordinate",
   "An open and known enemy of the patron",
   "Official governmental meddling",
@@ -55,14 +55,14 @@ var countervailingForces = [
   "The locals are against the patron"
 ];
 
-var eagernesses = [
+let eagernesses = [
   "Cautious, but can be convinced to hire",
   "Willing to promise standard rates",
   "Eager, willing to offer a bonus",
   "Desperate, might offer what they can't pay"
 ];
 
-var rewards = [
+let rewards = [
   "Government official favors owed",
   "Property in the area",
   "An item very valuable on another world",
@@ -77,7 +77,7 @@ var rewards = [
   "Illegal but valuable weapons or gear"
 ];
 
-var complications = [
+let complications = [
   "An ambush is laid somewhere",
   "PC involvement is leaked to the enemy",
   "The patron gives faulty aid somehow",
@@ -101,11 +101,11 @@ var complications = [
 ];
 
 function generatePatron () {
-  var trustworthiness = trustworthinesses[Math.floor(Math.random() * trustworthinesses.length)];
-  var challenge = challenges[Math.floor(Math.random() * challenges.length)];
-  var countervailingForce = countervailingForces[Math.floor(Math.random() * countervailingForces.length)];
-  var eagerness = eagernesses[Math.floor(Math.random() * eagernesses.length)];
-  var reward = rewards[Math.floor(Math.random() * rewards.length)];
-  var complication = complications[Math.floor(Math.random() * complications.length)];
+  let trustworthiness = trustworthinesses[Math.floor(Math.random() * trustworthinesses.length)];
+  let challenge = challenges[Math.floor(Math.random() * challenges.length)];
+  let countervailingForce = countervailingForces[Math.floor(Math.random() * countervailingForces.length)];
+  let eagerness = eagernesses[Math.floor(Math.random() * eagernesses.length)];
+  let reward = rewards[Math.floor(Math.random() * rewards.length)];
+  let complication = complications[Math.floor(Math.random() * complications.length)];
   return [trustworthiness, challenge, countervailingForce, eagerness, reward, complication];
 }
