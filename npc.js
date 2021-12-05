@@ -30,7 +30,7 @@ const npcTypes = { // HD, AC, Attack Bonus, Damage, Move, ML, Skills, Saves
   "Heroic Fighter": [6, "16 (combat)", "+8", "By weapon +3", "10m", "11", "+3", "12+"]
 };
 
-const backgrounds = [
+const npcBackgrounds = [
   "The local underclass or poorest natives",
   "Common laborers or cube workers",
   "Aspiring bourgeoise or upper class",
@@ -39,7 +39,7 @@ const backgrounds = [
   "Offworlders or exotics"
 ];
 
-const roles = [
+const npcRoles = [
   "Criminal, thug, thief, swindler",
   "Menial, cleaner, retail worker, servant",
   "Unskilled heavy labor, porter, construction",
@@ -50,7 +50,7 @@ const roles = [
   "Military, soldier, enforcer, law officer"
 ];
 
-const problems = [
+const npcProblems = [
   "They have significant debt or money woes",
   "A loved one is in trouble; reroll for it",
   "Romantic failure with a desired person",
@@ -63,14 +63,14 @@ const problems = [
   "They have no problems worth mentioning"
 ];
 
-const ages = [
+const npcAges = [
   "Unusually young or old for their role",
   "Young adult",
   "Mature prime",
   "Middle-aged or elderly"
 ];
 
-const desires = [
+const npcDesires = [
   "They want a particular romantic partner",
   "They want money for them or a loved one",
   "They want a promotion in their job",
@@ -85,7 +85,7 @@ const desires = [
   "They have everything they want from life"
 ];
 
-const characterTraits = [
+const npcCharacterTraits = [
   "Ambition",
   "Avarice",
   "Bitterness",
@@ -108,13 +108,13 @@ const characterTraits = [
   "Shame"
 ];
 
-function NPC () {
-  this.background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-  this.role = roles[Math.floor(Math.random() * roles.length)];
-  this.problem = problems[Math.floor(Math.random() * problems.length)];
-  this.age = ages[Math.floor(Math.random() * ages.length)];
-  this.desire = desires[Math.floor(Math.random() * desires.length)];
-  this.characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
+function Npc () {
+  this.background = npcBackgrounds[Math.floor(Math.random() * npcBackgrounds.length)];
+  this.role = npcRoles[Math.floor(Math.random() * npcRoles.length)];
+  this.problem = npcProblems[Math.floor(Math.random() * npcProblems.length)];
+  this.age = npcAges[Math.floor(Math.random() * npcAges.length)];
+  this.desire = npcDesires[Math.floor(Math.random() * npcDesires.length)];
+  this.characterTrait = npcCharacterTraits[Math.floor(Math.random() * npcCharacterTraits.length)];
   let statistics = [...npcTypes["Peaceful Human"]];
   if (this.role === "Criminal, thug, thief, swindler") {
     statistics = [...npcTypes["Martial Human"]];
