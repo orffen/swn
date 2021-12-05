@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-const conflicts = {
+const problemConflicts = {
   "Money": [
     ["Money is owed to a ruthless creditor", "Money was stolen from someone", "A sudden profit opportunity arises", "There's a hidden stash of wealth", "Money is offered from an evil source"],
     ["Organized crime wants it", "Corrupt officials want it", "A sympathetic NPC needs it", "The PCs are owed it", "It will disappear very soon"]
@@ -57,7 +57,7 @@ const conflicts = {
   ]
 };
 
-const restraints = [
+const problemRestraints = [
   "The government is cracking down on the conflict",
   "One side seems invincibly stronger to the other",
   "Both sides have 'doomsday' info or devices",
@@ -80,7 +80,7 @@ const restraints = [
   "An outside power threatens both sides"
 ];
 
-const twists = [
+const problemTwists = [
   "There's a very sharp time limit for any resolution",
   "The sympathetic side is actually a bunch of bastards",
   "There's an easy but very repugnant solution to hand",
@@ -104,10 +104,10 @@ const twists = [
 ];
 
 function Problem () {
-  let conflictsKeys = Object.keys(conflicts);
+  let conflictsKeys = Object.keys(problemConflicts);
   this.conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
-  this.situation = conflicts[this.conflict][0][Math.floor(Math.random() * conflicts[this.conflict][0].length)];
-  this.focus = conflicts[this.conflict][1][Math.floor(Math.random() * conflicts[this.conflict][1].length)];
-  this.restraint = restraints[Math.floor(Math.random() * restraints.length)];
-  this.twist = twists[Math.floor(Math.random() * twists.length)];
+  this.situation = problemConflicts[this.conflict][0][Math.floor(Math.random() * problemConflicts[this.conflict][0].length)];
+  this.focus = problemConflicts[this.conflict][1][Math.floor(Math.random() * problemConflicts[this.conflict][1].length)];
+  this.restraint = problemRestraints[Math.floor(Math.random() * problemRestraints.length)];
+  this.twist = problemTwists[Math.floor(Math.random() * problemTwists.length)];
 }
