@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-let bodyTraits = [
+const alienBodyTraits = [
   "Avian",
   "Bat-like",
   "Pterodactylian",
@@ -41,7 +41,7 @@ let bodyTraits = [
   "Hybrid"
 ];
 
-let lenses = [
+const alienLenses = [
   "Collectivity",
   "Curiosity",
   "Despair",
@@ -64,7 +64,7 @@ let lenses = [
   "Wrath"
 ];
 
-let socialStructures = [
+const alienSocialStructures = [
   "Democratic",
   "Monarchic",
   "Tribal",
@@ -75,24 +75,24 @@ let socialStructures = [
   "Multipolar Cooperative"
 ];
 
-function generateAlien () {
-  let bodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
-  if (bodyTrait === "Hybrid") {
+function Alien () {
+  this.bodyTrait = alienBodyTraits[Math.floor(Math.random() * alienBodyTraits.length)];
+  if (this.bodyTrait === "Hybrid") {
     let numberBodyTraits = [2, 2, 3][Math.floor(Math.random() * 3)]; // generate 2 templates twice as often as 3
     let tempBodyTraits = new Set();
     while (tempBodyTraits.size < numberBodyTraits) {
-      let newBodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
+      let newBodyTrait = alienBodyTraits[Math.floor(Math.random() * alienBodyTraits.length)];
       if (newBodyTrait !== "Hybrid") { // don't allow another 'Hybrid' bodyTrait to be added
         tempBodyTraits.add(newBodyTrait);
       }
     }
-    bodyTrait = [...tempBodyTraits].join("/"); // convert to string for output
+    this.bodyTrait = [...tempBodyTraits].join("/"); // convert to string for output
   }
-  let lens = [];
+  let tempLenses = new Set();
   let limit = [1, 2, 2, 3, 4][(Math.floor(Math.random() * 5))];
-  for (let index = 0; index < limit; index++) {
-    lens.push(lenses[Math.floor(Math.random() * lenses.length)]);
+  while (tempLenses.size < limit) {
+    tempLenses.add(alienLenses[Math.floor(Math.random() * alienLenses.length)])
   }
-  let socialStructure = socialStructures[Math.floor(Math.random() * socialStructures.length)];
-  return [bodyTrait, lens, socialStructure];
+  this.lenses = [...tempLenses].join(", ");
+  this.socialStructure = alienSocialStructures[Math.floor(Math.random() * alienSocialStructures.length)];
 }
