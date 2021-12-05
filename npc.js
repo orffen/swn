@@ -100,12 +100,12 @@ var characterTraits = [
   "Sham"
 ];
 
-function generateNpc () {
-  var background = Math.floor(Math.random() * backgrounds.length);
-  var role = Math.floor(Math.random() * roles.length);
-  var problem = Math.floor(Math.random() * problems.length);
-  var age = Math.floor(Math.random() * ages.length);
-  var desire = Math.floor(Math.random() * desires.length);
-  var characterTrait = Math.floor(Math.random() * characterTraits.length);
+function generateNPC () {
+  var background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  var role = roles[Math.floor(Math.random() * roles.length)];
+  var problem = problems[Math.floor(Math.random() * problems.length)];
+  var age = ages[Math.floor(Math.random() * ages.length)];
+  var desire = desires[Math.floor(Math.random() * desires.length)];
+  var characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
   return [background, role, problem, age, desire, characterTrait];
 }
