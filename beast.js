@@ -22,15 +22,15 @@
  * THE SOFTWARE.
  */
 
-const beastTypes = {
+const beastTypes = { // HD, AC, Attack Bonus, Damage, Move, Morale, Skills, Saves
   "Small Vicious Beast": ["1 HP", "14", "+1", "1d2", "10m", "7", "+1", "15+"],
-  "Small Pack Hunter": ["1", "13", "+1", "1d4", "15m", "8", "+1", "15+"],
-  "Large Pack Hunter": ["2", "14", "+2", "1d6", "15m", "9", "+1", "14+"],
-  "Large Aggressive Prey Animal": ["5", "13", "+4", "1d10", "15m", "8", "+1", "12+"],
-  "Lesser Lone Predator": ["3", "14", "+4 x2", "1d8 each", "15m", "8 +2", "14+"],
-  "Greater Lone Predator": ["5", "15", "+6 x2", "1d10 each", "10m", "9 +2", "12+"],
-  "Terrifying Apex Predator": ["8", "16", "+8 x2", "1d10 each", "20m", "9 +2", "11+"],
-  "Gengineered Murder Beast": ["10", "18", "+10 x4", "1d10 each", "20m", "11 +3", "10+"]
+  "Small Pack Hunter": [1, "13", "+1", "1d4", "15m", "8", "+1", "15+"],
+  "Large Pack Hunter": [2, "14", "+2", "1d6", "15m", "9", "+1", "14+"],
+  "Large Aggressive Prey Animal": [5, "13", "+4", "1d10", "15m", "8", "+1", "12+"],
+  "Lesser Lone Predator": [3, "14", "+4 x2", "1d8 each", "15m", "8 +2", "14+"],
+  "Greater Lone Predator": [5, "15", "+6 x2", "1d10 each", "10m", "9 +2", "12+"],
+  "Terrifying Apex Predator": [8, "16", "+8 x2", "1d10 each", "20m", "9 +2", "11+"],
+  "Gengineered Murder Beast": [10, "18", "+10 x4", "1d10 each", "20m", "11 +3", "10+"]
 };
 
 const beastAnimalFeatures = [
@@ -162,4 +162,22 @@ function Beast () {
     }
     this.poison = "Causes " + effect + " " + onset + duration;
   }
+  let statistics = [...beastTypes[this.type]];
+  let tempHp = 0;
+  if (statistics[0] === "1 HP") {
+    tempHp = 1;
+  } else {
+    for (let i = statistics[0]; i > 0; i--) {
+      tempHp += Math.floor(Math.random() * 6) + 1;
+    }
+  }
+  statistics[0] = tempHp;
+  this.hitPoints = statistics[0];
+  this.armorClass = statistics[1];
+  this.attackBonus = statistics[2];
+  this.damage = statistics[3].replace(/^1d\d+/, d => Math.floor(Math.random() * d.slice(2)) + 1); // roll 1dX damage dice (d)
+  this.move = statistics[4];
+  this.morale = statistics[5];
+  this.skills = statistics[6];
+  this.saves = statistics[7];
 }
