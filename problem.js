@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-let conflicts = {
+const conflicts = {
   "Money": [
     ["Money is owed to a ruthless creditor", "Money was stolen from someone", "A sudden profit opportunity arises", "There's a hidden stash of wealth", "Money is offered from an evil source"],
     ["Organized crime wants it", "Corrupt officials want it", "A sympathetic NPC needs it", "The PCs are owed it", "It will disappear very soon"]
@@ -57,7 +57,7 @@ let conflicts = {
   ]
 };
 
-let restraints = [
+const restraints = [
   "The government is cracking down on the conflict",
   "One side seems invincibly stronger to the other",
   "Both sides have 'doomsday' info or devices",
@@ -80,7 +80,7 @@ let restraints = [
   "An outside power threatens both sides"
 ];
 
-let twists = [
+const twists = [
   "There's a very sharp time limit for any resolution",
   "The sympathetic side is actually a bunch of bastards",
   "There's an easy but very repugnant solution to hand",
@@ -103,12 +103,11 @@ let twists = [
   "Actually, there is no twist. It's all exactly as it seems."
 ];
 
-function generateProblem () {
+function Problem () {
   let conflictsKeys = Object.keys(conflicts);
-  let conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
-  let situation = conflicts[conflict][0][Math.floor(Math.random() * conflicts[conflict][0].length)];
-  let focus = conflicts[conflict][1][Math.floor(Math.random() * conflicts[conflict][1].length)];
-  let restraint = restraints[Math.floor(Math.random() * restraints.length)];
-  let twist = twists[Math.floor(Math.random() * twists.length)];
-  return [conflict, situation, focus, restraint, twist];
+  this.conflict = conflictsKeys[Math.floor(Math.random() * conflictsKeys.length)];
+  this.situation = conflicts[this.conflict][0][Math.floor(Math.random() * conflicts[this.conflict][0].length)];
+  this.focus = conflicts[this.conflict][1][Math.floor(Math.random() * conflicts[this.conflict][1].length)];
+  this.restraint = restraints[Math.floor(Math.random() * restraints.length)];
+  this.twist = twists[Math.floor(Math.random() * twists.length)];
 }
