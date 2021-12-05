@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-var characterClasses = {
+let characterClasses = {
   "Expert (Smart)": ["10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", "7 (-1)", "9 (+0)", 0, "+0"],
   "Expert (Smooth)": ["7 (-1)", "9 (+0)", "10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", 0, "+0"],
   "Expert (Nimble)": ["10 (+0)", "14 (+1)", "12 (+0)", "11 (+0)", "9 (+0)", "7 (-1)", 0, "+0"],
@@ -33,39 +33,39 @@ var characterClasses = {
   "Psychic (Adept)": ["12 (+0)", "10 (+0)", "14 (+1)", "9 (+0)", "11 (+0)", "7 (-1)", 2, "+0"] // HD modifier incorporates CON bonus
 };
 
-var backgrounds = {
-  "Barbarian": ["Survive-0", "Notice-0", "Any Combat-0"],
-  "Clergy": ["Talk-0", "Perform-0", "Know-0"],
-  "Courtesan": ["Perform-0", "Notice-0", "Connect-0"],
-  "Criminal": ["Connect-0", "Sneak-0", "Talk-0"],
-  "Dilettante": ["Connect-0", "Know-0", "Talk-0"],
-  "Entertainer": ["Perform-0", "Talk-0", "Connect-0"],
-  "Merchant": ["Trade-0", "Talk-0", "Connect-0"],
-  "Noble": ["Lead-0", "Connect-0", "Administer-0"],
-  "Official": ["Administer-0", "Talk-0", "Connect-0"],
-  "Peasant": ["Exert-0", "Sneak-0", "Survive-0"],
-  "Physician": ["Heal-0", "Know-0", "Notice-0"],
-  "Pilot": ["Pilot-0", "Fix-0", "Shoot or Trade-0"],
-  "Politician": ["Talk-0", "Lead-0", "Connect-0"],
-  "Scholar": ["Know-0", "Administer-0", "Connect-0"],
-  "Soldier": ["Any Combat-0", "Exert-0", "Survive-0"],
-  "Spacer": ["Fix-0", "Pilot-0", "Program-0"],
-  "Technician": ["Fix-0", "Notice-0", "Exert-0"],
-  "Thug": ["Any Combat-0", "Talk-0", "Connect-0"],
-  "Vagabond": ["Notice-0", "Sneak-0", "Survive-0"],
-  "Worker": ["Connect-0", "Exert-0", "Work-0"]
+let backgrounds = {
+  "Barbarian": ["Survive", "Notice", "Any Combat"],
+  "Clergy": ["Talk", "Perform", "Know"],
+  "Courtesan": ["Perform", "Notice", "Connect"],
+  "Criminal": ["Connect", "Sneak", "Talk"],
+  "Dilettante": ["Connect", "Know", "Talk"],
+  "Entertainer": ["Perform", "Talk", "Connect"],
+  "Merchant": ["Trade", "Talk", "Connect"],
+  "Noble": ["Lead", "Connect", "Administer"],
+  "Official": ["Administer", "Talk", "Connect"],
+  "Peasant": ["Exert", "Sneak", "Survive"],
+  "Physician": ["Heal", "Know", "Notice"],
+  "Pilot": ["Pilot", "Fix", "Shoot or Trade"],
+  "Politician": ["Talk", "Lead", "Connect"],
+  "Scholar": ["Know", "Administer", "Connect"],
+  "Soldier": ["Any Combat", "Exert", "Survive"],
+  "Spacer": ["Fix", "Pilot", "Program"],
+  "Technician": ["Fix", "Notice", "Exert"],
+  "Thug": ["Any Combat", "Talk", "Connect"],
+  "Vagabond": ["Notice", "Sneak", "Survive"],
+  "Worker": ["Connect", "Exert", "Work"]
 };
 
-var psychicSkills = [
-  "Biopsionics-0",
-  "Metapsionics-0",
-  "Precognition-0",
-  "Telekinesis-0",
-  "Telepathy-0",
-  "Teleportation-0"
+let psychicSkills = [
+  "Biopsionics",
+  "Metapsionics",
+  "Precognition",
+  "Telekinesis",
+  "Telepathy",
+  "Teleportation"
 ];
 
-var focuses = {
+let focuses = {
   "Expert (Smart)": [["Specialist/Fix", "Die Hard"], ["Hacker", "Tinker"], ["Specialist/Know", "Healer"], ["Specialist/Fix", "Tinker"], ["Healer", "Ironhide"], ["Specialist/Fix", "Hacker"]],
   "Expert (Smooth)": [["Diplomat", "Connected"], ["Specialist/Talk", "Die Hard"], ["Diplomat", "Alert"], ["Specialist/Lead", "Authority"], ["Healer", "Specialist/Talk"], ["Specialist/Notice", "Specialist/Talk"]],
   "Expert (Nimble)": [["Specialist/Pilot", "Starfarer"], ["Healer", "Die Hard"], ["Tinker", "Gunslinger"], ["Specialist/Sneak", "Assassin"], ["Specialist/Sneak", "Specialist/Exert"], ["Specialist/Entertain", "Specialist/Sneak"]],
@@ -76,29 +76,69 @@ var focuses = {
   "Psychic (Adept)": [["Armsman"], ["Ironhide"], ["Die Hard"], ["Psychic Training"], ["Healer"], ["Unarmed Combatant"]]
 };
 
-var focusesSkills = {
+let focusesSkills = {
 //TODO: poopulate with skill lists for focuses
 };
 
+let bonusSkills = [
+  "Administer",
+  "Connect",
+  "Exert",
+  "Fix",
+  "Heal",
+  "Know",
+  "Lead",
+  "Notice",
+  "Perform",
+  "Pilot",
+  "Program",
+  "Punch",
+  "Shoot",
+  "Sneak",
+  "Stab",
+  "Survive",
+  "Talk",
+  "Trade",
+  "Work",
+  "Any",
+];
+
+function calculateSkillLevels (s) {
+  let skills = [...s];
+  let skillsCounted = [];
+  let skillsDict = {};
+  skills.forEach(function(i) {
+    if (!skillsCounted.includes(i)) {
+      skillsDict[i] = skills.filter(e => e === i).length - 1;
+      skillsCounted.push(i);
+    }
+  });
+  let r = [];
+  Object.keys(skillsDict).forEach(key => r.push(key + "-" + skillsDict[key]));
+  return r;
+}
 
 function generateCharacter () {
-  var characterClassesKeys = Object.keys(characterClasses);
-  var characterClass = characterClassesKeys[Math.floor(Math.random() * characterClassesKeys.length)];
-  var characterStatistics = characterClasses[characterClass];
-  characterStatistics[6] += Math.floor(Math.random() * 6) + 1; // roll HD
-  var backgroundKeys = Object.keys(backgrounds);
-  var characterBackground = backgroundKeys[Math.floor(Math.random() * backgroundKeys.length)];
-  var characterSkills = backgrounds[characterBackground];
+  let characterClassesKeys = Object.keys(characterClasses);
+  let characterClass = characterClassesKeys[Math.floor(Math.random() * characterClassesKeys.length)];
+  let characterStatistics = [...characterClasses[characterClass]];
+  characterStatistics[6] += Math.floor(Math.random() * 6 + 1); // roll HD
+  let backgroundKeys = Object.keys(backgrounds);
+  let characterBackground = backgroundKeys[Math.floor(Math.random() * backgroundKeys.length)];
+  let characterSkills = [...backgrounds[characterBackground]];
   //TODO: add psychic skills, randomly pick technique if level-1
-  var characterFocuses = focuses[characterClass][Math.floor(Math.random() * focuses[characterClass].length)];
+  let characterFocuses = [...focuses[characterClass][Math.floor(Math.random() * focuses[characterClass].length)]];
   //TODO: add skills based on focuses, incrementing if the skill already exists
-  //TODO: add bonus skill, incrementing if the skill already exists
+  let bonusSkill = bonusSkills[Math.floor(Math.random() * bonusSkills.length)];
+  if (bonusSkill === "Any") {
+    bonusSkill = characterSkills[Math.floor(Math.random() * characterSkills.length)];
+  }
+  characterSkills.push(bonusSkill);
 
   //TODO: add effort to characterClasses
   //TODO: add saving throws to characterClasses
 
   //TODO: add equipment package
-
-
+  characterSkills = calculateSkillLevels(characterSkills);
   return [characterClass, characterStatistics, characterBackground, characterSkills, characterFocuses];
 }
