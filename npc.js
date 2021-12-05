@@ -116,9 +116,9 @@ function NPC () {
   this.desire = desires[Math.floor(Math.random() * desires.length)];
   this.characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
   let statistics = [...npcTypes["Peaceful Human"]];
-  if (NPC.role === "Criminal, thug, thief, swindler") {
+  if (this.role === "Criminal, thug, thief, swindler") {
     statistics = [...npcTypes["Martial Human"]];
-  } else if (NPC.role === "Military, soldier, enforcer, law officer") {
+  } else if (this.role === "Military, soldier, enforcer, law officer") {
     statistics = [...npcTypes["Veteran Fighter"]];
   }
   let tempHp = 0;
