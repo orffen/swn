@@ -22,39 +22,49 @@
  * THE SOFTWARE.
  */
 
-var bodyTraits = [
-  "Avian, bat-like, or pterodactylian",
-  "Reptilian, amphibian, or draconic",
-  "Insectile, beetle-like, spiderish, or wasp-like",
-  "Mammalian, furred or bare-skinned",
+let bodyTraits = [
+  "Avian",
+  "Bat-like",
+  "Pterodactylian",
+  "Reptilian",
+  "Amphibian",
+  "Draconic",
+  "Insectile",
+  "Beetle-like",
+  "Spiderish",
+  "Wasp-like",
+  "Mammalian, furred",
+  "Mammalian, bare-skinned",
   "Exotic, composed of some novel substance",
+  "Hybrid",
+  "Hybrid",
   "Hybrid"
 ];
 
-var lenses = [
-  "Collectivity"
-  "Curiosity"
-  "Despair"
-  "Domination"
-  "Faith"
-  "Fear"
-  "Gluttony"
-  "Greed"
-  "Hate"
-  "Honor"
-  "Journeying"
-  "Joy"
-  "Pacifism"
-  "Pride"
-  "Sagacity"
-  "Subtlety"
-  "Tradition"
-  "Treachery"
-  "Tribalism"
+let lenses = [
+  "Collectivity",
+  "Curiosity",
+  "Despair",
+  "Domination",
+  "Faith",
+  "Fear",
+  "Gluttony",
+  "Greed",
+  "Hate",
+  "Honor",
+  "Journeying",
+  "Joy",
+  "Pacifism",
+  "Pride",
+  "Sagacity",
+  "Subtlety",
+  "Tradition",
+  "Treachery",
+  "Tribalism",
   "Wrath"
 ];
 
-var socialStructures = [
+let socialStructures = [
   "Democratic",
   "Monarchic",
   "Tribal",
@@ -65,9 +75,8 @@ var socialStructures = [
   "Multipolar Cooperative"
 ];
 
-
 function generateAlien () {
-  var bodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
+  let bodyTrait = bodyTraits[Math.floor(Math.random() * bodyTraits.length)];
   if (bodyTrait === "Hybrid") {
     let numberBodyTraits = [2, 2, 3][Math.floor(Math.random() * 3)]; // generate 2 templates twice as often as 3
     let tempBodyTraits = new Set();
@@ -79,11 +88,11 @@ function generateAlien () {
     }
     bodyTrait = [...tempBodyTraits].join("/"); // convert to string for output
   }
-  var lens = [];
-  var limit = [1, 2, 2, 3, 4][(Math.floor(Math.random() * 5))];
+  let lens = [];
+  let limit = [1, 2, 2, 3, 4][(Math.floor(Math.random() * 5))];
   for (let index = 0; index < limit; index++) {
     lens.push(lenses[Math.floor(Math.random() * lenses.length)]);
   }
-  var socialStructure = socialStructures[Math.floor(Math.random() * socialStructures.length)];
+  let socialStructure = socialStructures[Math.floor(Math.random() * socialStructures.length)];
   return [bodyTrait, lens, socialStructure];
 }
