@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-var npcTypes = {
+let npcTypes = {
   "Peaceful Human": [1, "10", "+0", "Unarmed", "10m", "6", "+1", "15+"],
   "Martial Human": [1, "10", "+1", "By weapon", "10m", "8", "+1", "15+"],
   "Veteran Fighter": [2, "14", "+2", "By weapon +1", "10m", "9", "+1", "14+"],
@@ -30,7 +30,7 @@ var npcTypes = {
   "Heroic Fighter": [6, "16 (combat)", "+8", "By weapon +3", "10m", "11", "+3", "12+"]
 };
 
-var backgrounds = [
+let backgrounds = [
   "The local underclass or poorest natives",
   "Common laborers or cube workers",
   "Aspiring bourgeoise or upper class",
@@ -39,7 +39,7 @@ var backgrounds = [
   "Offworlders or exotics"
 ];
 
-var roles = [
+let roles = [
   "Criminal, thug, thief, swindler",
   "Menial, cleaner, retail worker, servant",
   "Unskilled heavy labor, porter, construction",
@@ -50,7 +50,7 @@ var roles = [
   "Military, soldier, enforcer, law officer"
 ];
 
-var problems = [
+let problems = [
   "They have significant debt or money woes",
   "A loved one is in trouble; reroll for it",
   "Romantic failure with a desired person",
@@ -63,14 +63,14 @@ var problems = [
   "They have no problems worth mentioning"
 ];
 
-var ages = [
+let ages = [
   "Unusually young or old for their role",
   "Young adult",
   "Mature prime",
   "Middle-aged or elderly"
 ];
 
-var desires = [
+let desires = [
   "They want a particular romantic partner",
   "They want money for them or a loved one",
   "They want a promotion in their job",
@@ -85,7 +85,7 @@ var desires = [
   "They have everything they want from life"
 ];
 
-var characterTraits = [
+let characterTraits = [
   "Ambition",
   "Avarice",
   "Bitterness",
@@ -105,21 +105,26 @@ var characterTraits = [
   "Pessimism",
   "Protectiveness",
   "Resentment",
-  "Sham"
+  "Shame"
 ];
 
 function generateNPC () {
-  var background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-  var role = roles[Math.floor(Math.random() * roles.length)];
-  var problem = problems[Math.floor(Math.random() * problems.length)];
-  var age = ages[Math.floor(Math.random() * ages.length)];
-  var desire = desires[Math.floor(Math.random() * desires.length)];
-  var characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
-  var statistics = npcTypes["Peaceful Human"];
+  let background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  let role = roles[Math.floor(Math.random() * roles.length)];
+  let problem = problems[Math.floor(Math.random() * problems.length)];
+  let age = ages[Math.floor(Math.random() * ages.length)];
+  let desire = desires[Math.floor(Math.random() * desires.length)];
+  let characterTrait = characterTraits[Math.floor(Math.random() * characterTraits.length)];
+  let statistics = [...npcTypes["Peaceful Human"]];
   if (role === "Criminal, thug, thief, swindler") {
-    statistics = npcTypes["Martial Human"];
+    statistics = [...npcTypes["Martial Human"]];
   } else if (role === "Military, soldier, enforcer, law officer") {
-    statistics = npcTypes["Veteran Fighter"];
+    statistics = [...npcTypes["Veteran Fighter"]];
   }
+  let hitPoints = 0;
+  for (let i = statistics[0]; i > 0; i--) {
+    hitPoints += Math.floor(Math.random() * 6) + 1;
+  }
+  statistics[0] = hitPoints;
   return [statistics, background, role, problem, age, desire, characterTrait];
 }
