@@ -22,15 +22,15 @@
  * THE SOFTWARE.
  */
 
-let characterClasses = {
-  "Expert (Smart)": ["10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", "7 (-1)", "9 (+0)", 0, "+0"],
-  "Expert (Smooth)": ["7 (-1)", "9 (+0)", "10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", 0, "+0"],
-  "Expert (Nimble)": ["10 (+0)", "14 (+1)", "12 (+0)", "11 (+0)", "9 (+0)", "7 (-1)", 0, "+0"],
-  "Warrior (Melee)": ["14 (+1)", "9 (+0)", "12 (+0)", "7 (-1)", "10 (+0)", "11 (+0)", 2, "+1"],
-  "Warrior (Ranged)": ["9 (+0)", "14 (+1)", "12 (+0)", "10 (+0)", "7 (-1)", "11 (+0)", 2, "+1"],
-  "Warrior (Leader)": ["7 (-1)", "10 (+0)", "9 (+0)", "11 (+0)", "12 (+0)", "14 (+1)", 2, "+1"],
-  "Psychic (Seer)": ["9 (+0)", "11 (+0)", "12 (+0)", "10 (+0)", "14 (+1)", "7 (-1)", 0, "+0"],
-  "Psychic (Adept)": ["12 (+0)", "10 (+0)", "14 (+1)", "9 (+0)", "11 (+0)", "7 (-1)", 2, "+0"] // HD modifier incorporates CON bonus
+let characterClasses = { // STR, DEX, CON, INT, WIS, CHA, HD modifier, Attack Bonus, Physical Save, Evasion Save, Mental Save, Effort not including highest psychic skill
+  "Expert (Smart)": ["10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", "7 (-1)", "9 (+0)", 0, "+0", 15, 14, 15, "None"],
+  "Expert (Smooth)": ["7 (-1)", "9 (+0)", "10 (+0)", "12 (+0)", "11 (+0)", "14 (+1)", 0, "+0", 15, 15, 14, "None"],
+  "Expert (Nimble)": ["10 (+0)", "14 (+1)", "12 (+0)", "11 (+0)", "9 (+0)", "7 (-1)", 0, "+0", 15, 14, 15, "None"],
+  "Warrior (Melee)": ["14 (+1)", "9 (+0)", "12 (+0)", "7 (-1)", "10 (+0)", "11 (+0)", 2, "+1", 14, 15, 15, "None"],
+  "Warrior (Ranged)": ["9 (+0)", "14 (+1)", "12 (+0)", "10 (+0)", "7 (-1)", "11 (+0)", 2, "+1", 15, 14, 15, "None"],
+  "Warrior (Leader)": ["7 (-1)", "10 (+0)", "9 (+0)", "11 (+0)", "12 (+0)", "14 (+1)", 2, "+1", 15, 15, 14, "None"],
+  "Psychic (Seer)": ["9 (+0)", "11 (+0)", "12 (+0)", "10 (+0)", "14 (+1)", "7 (-1)", 0, "+0", 15, 15, 14, 2],
+  "Psychic (Adept)": ["12 (+0)", "10 (+0)", "14 (+1)", "9 (+0)", "11 (+0)", "7 (-1)", 2, "+0", 14, 15, 15, 2] // HD modifier incorporates CON bonus
 };
 
 let backgrounds = {
@@ -56,14 +56,14 @@ let backgrounds = {
   "Worker": ["Connect", "Exert", "Work"]
 };
 
-let psychicSkills = [
-  "Biopsionics",
-  "Metapsionics",
-  "Precognition",
-  "Telekinesis",
-  "Telepathy",
-  "Teleportation"
-];
+let psychicSkills = {
+  "Biopsionics": [["Mastered Succor", "Organic Purification Protocols", "Remote Repair"], "Psychic Succor"],
+  "Metapsionics": [["Cloak Powers", "Mindtracing", "Synthetic Adaptation"], "Psychic Refinement"],
+  "Precognition": [["Intuitive Response", "Sense the Need", "Terminal Reflection"], "Oracle"],
+  "Telekinesis": [["Kinetic Transversal", "Pressure Field", "Telekinetic Armory"], "Telekinetic Manipulation"],
+  "Telepathy": [["Facile Mind", "Transmit Thought"], "Telepathic Contact"],
+  "Teleportation": [["Proficient Apportation", "Spatial Awareness"], "Personal Apportation"]
+};
 
 let focuses = {
   "Expert (Smart)": [["Specialist/Fix", "Die Hard"], ["Hacker", "Tinker"], ["Specialist/Know", "Healer"], ["Specialist/Fix", "Tinker"], ["Healer", "Ironhide"], ["Specialist/Fix", "Hacker"]],
@@ -126,17 +126,28 @@ function generateCharacter () {
   let backgroundKeys = Object.keys(backgrounds);
   let characterBackground = backgroundKeys[Math.floor(Math.random() * backgroundKeys.length)];
   let characterSkills = [...backgrounds[characterBackground]];
-  //TODO: add psychic skills, randomly pick technique if level-1
   let characterFocuses = [...focuses[characterClass][Math.floor(Math.random() * focuses[characterClass].length)]];
+
   //TODO: add skills based on focuses, incrementing if the skill already exists
+  
   let bonusSkill = bonusSkills[Math.floor(Math.random() * bonusSkills.length)];
   if (bonusSkill === "Any") {
     bonusSkill = characterSkills[Math.floor(Math.random() * characterSkills.length)];
   }
   characterSkills.push(bonusSkill);
-
-  //TODO: add effort to characterClasses
-  //TODO: add saving throws to characterClasses
+  if (characterClass.startsWith("Psychic")) {
+    let psychicSkillsKeys = Object.keys(psychicSkills);
+    let psychicSkill1 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
+    characterFocuses.push(psychicSkills[psychicSkill1][1]);
+    let psychicSkill2 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
+    characterFocuses.push(psychicSkills[psychicSkill2][1]);
+    if (psychicSkill1 === psychicSkill2) {
+      characterFocuses.push(psychicSkills[psychicSkill1][0][Math.floor(Math.random() * psychicSkills[psychicSkill1][0].length)]);
+      characterStatistics[11] += 1; // add psychic skill level-1 to effort
+    }
+    characterSkills.push(psychicSkill1);
+    characterSkills.push(psychicSkill2);
+  }
 
   //TODO: add equipment package
   characterSkills = calculateSkillLevels(characterSkills);
