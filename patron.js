@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-let trustworthinesses = [
+let patronTrustworthiness = [
   "They intend to totally screw the PCs",
   "They won't pay unless forced to do so",
   "They'll pay slowly or reluctantly",
@@ -31,7 +31,7 @@ let trustworthinesses = [
   "They'll pay more than they promised"
 ];
 
-let challenges = [
+let patronChallenges = [
   "Kill somebody who might deserve it",
   "Kidnap someone dangerous",
   "Steal a well-guarded object",
@@ -42,7 +42,7 @@ let challenges = [
   "Guard an object being transported"
 ];
 
-let countervailingForces = [
+let patronCountervailingForces = [
   "A treacherous employer or subordinate",
   "An open and known enemy of the patron",
   "Official governmental meddling",
@@ -55,14 +55,14 @@ let countervailingForces = [
   "The locals are against the patron"
 ];
 
-let eagernesses = [
+let patronEagerness = [
   "Cautious, but can be convinced to hire",
   "Willing to promise standard rates",
   "Eager, willing to offer a bonus",
   "Desperate, might offer what they can't pay"
 ];
 
-let rewards = [
+let patronRewards = [
   "Government official favors owed",
   "Property in the area",
   "An item very valuable on another world",
@@ -77,7 +77,7 @@ let rewards = [
   "Illegal but valuable weapons or gear"
 ];
 
-let complications = [
+let patronComplications = [
   "An ambush is laid somewhere",
   "PC involvement is leaked to the enemy",
   "The patron gives faulty aid somehow",
@@ -100,12 +100,11 @@ let complications = [
   "No complications; it's just as it seems to be"
 ];
 
-function generatePatron () {
-  let trustworthiness = trustworthinesses[Math.floor(Math.random() * trustworthinesses.length)];
-  let challenge = challenges[Math.floor(Math.random() * challenges.length)];
-  let countervailingForce = countervailingForces[Math.floor(Math.random() * countervailingForces.length)];
-  let eagerness = eagernesses[Math.floor(Math.random() * eagernesses.length)];
-  let reward = rewards[Math.floor(Math.random() * rewards.length)];
-  let complication = complications[Math.floor(Math.random() * complications.length)];
-  return [trustworthiness, challenge, countervailingForce, eagerness, reward, complication];
+function Patron () {
+  this.trustworthiness = patronTrustworthiness[Math.floor(Math.random() * patronTrustworthiness.length)];
+  this.challenge = patronChallenges[Math.floor(Math.random() * patronChallenges.length)];
+  this.countervailingForce = patronCountervailingForces[Math.floor(Math.random() * patronCountervailingForces.length)];
+  this.eagerness = patronEagerness[Math.floor(Math.random() * patronEagerness.length)];
+  this.reward = patronRewards[Math.floor(Math.random() * patronRewards.length)];
+  this.complication = patronComplications[Math.floor(Math.random() * patronComplications.length)];
 }
