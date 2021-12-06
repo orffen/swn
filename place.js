@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-let hazards = {
+const placeHazards = {
   "Social": [
     ["An explosively temperamental VIP", "An unknown but critical social taboo", "A case of mistaken identity", "An expectation for specific PC action", "A frame job hung on the PCs"],
     ["An allied NPC breaks ties", "An enemy is alerted to them", "A new enemy is made", "Cads think the PCs are allies", "An opportunity is lost"]
@@ -57,7 +57,7 @@ let hazards = {
   ]
 };
 
-let rewards = [
+const placeRewards = [
   "Large cache of credits",
   "Precious cultural artifact",
   "Vital data on the party's goal",
@@ -80,7 +80,7 @@ let rewards = [
   "Stock of valuable weaponry"
 ];
 
-let civilizedOngoings = [
+const placeCivilizedOngoings = [
   "Local festival going on",
   "Angry street protests",
   "Minor fire or other disorder",
@@ -103,7 +103,7 @@ let civilizedOngoings = [
   "Aerial light display"
 ];
 
-let wildernessOngoings = [
+const placeWildernessOngoings = [
   "Bandits have moved in",
   "Flooding swept through",
   "Part of it has collapsed",
@@ -126,13 +126,12 @@ let wildernessOngoings = [
   "A shell of a building remains"
 ];
 
-function generatePlace () {
-  let hazardsKeys = Object.keys(hazards);
-  let hazard = hazardsKeys[Math.floor(Math.random() * hazardsKeys.length)];
-  let specificExample = hazards[hazard][0][Math.floor(Math.random() * hazards[hazard][0].length)];
-  let possibleDanger = hazards[hazard][1][Math.floor(Math.random() * hazards[hazard][1].length)];
-  let reward = rewards[Math.floor(Math.random() * rewards.length)];
-  let civilizedOngoing = civilizedOngoings[Math.floor(Math.random() * civilizedOngoings.length)];
-  let wildernessOngoing = wildernessOngoings[Math.floor(Math.random() * rewards.length)];
-  return [hazard, specificExample, possibleDanger, reward, civilizedOngoing, wildernessOngoing];
+function Place () {
+  let hazardsKeys = Object.keys(placeHazards);
+  this.hazard = hazardsKeys[Math.floor(Math.random() * hazardsKeys.length)];
+  this.specificExample = placeHazards[this.hazard][0][Math.floor(Math.random() * placeHazards[this.hazard][0].length)];
+  this.possibleDanger = placeHazards[this.hazard][1][Math.floor(Math.random() * placeHazards[this.hazard][1].length)];
+  this.reward = placeRewards[Math.floor(Math.random() * placeRewards.length)];
+  this.civilizedOngoing = placeCivilizedOngoings[Math.floor(Math.random() * placeCivilizedOngoings.length)];
+  this.wildernessOngoing = placeWildernessOngoings[Math.floor(Math.random() * placeWildernessOngoings.length)];
 }
