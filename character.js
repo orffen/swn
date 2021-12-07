@@ -136,14 +136,15 @@ var characterCombatSkills = [
 
 function addSkill (skills, newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]) {
   let skillCount = {};
-  skills.forEach(e => skillCount[e] ? ++skillCount[e] : skillCount[e] = 1);
-  //TODO: handle 'Any Combat' skill
-  if (newSkill.startsWith("Any") || skills.includes(newSkill)) {
+  skills.forEach(e => typeof skillCount[e] === "undefined" ? skillCount[e] = 1 : ++skillCount[e]);
+  //if (skills.includes(newSkill) || newSkill.startsWith("Any")) {
+  if (skills.includes(newSkill)) {
     if (skillCount[newSkill] > 2) {
       skills.push("New");
       while (skills[skills.length - 1] === "New") {
+        //TODO: handle 'Any Combat' and 'X or X' skill
         newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]; // exclude "Any"
-        if (skillCount[newSkill] < 2) {
+        if (skillCount[newSkill] < 2) { //TODO: check this; getting level-2 in output
           skills.pop();
           skills.push(newSkill);
         }
@@ -216,12 +217,8 @@ function Character () {
       default:
         addSkill(this.skills, characterFocusSkills[this.focuses[i]]);
     }
-  }  
-  let bonusSkill = characterBonusSkills[Math.floor(Math.random() * characterBonusSkills.length)];
-  if (bonusSkill === "Any") {
-    bonusSkill = this.skills[Math.floor(Math.random() * this.skills.length)];
   }
-  addSkill(this.skills, bonusSkill);
+  addSkill(this.skills); // Bonus skill
   if (this.class.startsWith("Psychic")) {
     let psychicSkill1 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
     let psychicSkill2 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
@@ -235,8 +232,7 @@ function Character () {
     this.skills.push(psychicSkill1);
     this.skills.push(psychicSkill2);
   }
+  this.skills = calculateSkillLevels(this.skills);
 
   //TODO: add equipment package
-
-  this.skills = calculateSkillLevels(this.skills);
 }
