@@ -128,6 +128,34 @@ const characterBonusSkills = [
   "Any",
 ];
 
+var characterCombatSkills = [
+  "Stab",
+  "Shoot",
+  "Punch"
+];
+
+function addSkill (skills, newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]) {
+  let skillCount = {};
+  skills.forEach(e => skillCount[e] ? ++skillCount[e] : skillCount[e] = 1);
+  //TODO: handle 'Any Combat' skill
+  if (newSkill.startsWith("Any") || skills.includes(newSkill)) {
+    if (skillCount[newSkill] > 2) {
+      skills.push("New");
+      while (skills[skills.length - 1] === "New") {
+        newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]; // exclude "Any"
+        if (skillCount[newSkill] < 2) {
+          skills.pop();
+          skills.push(newSkill);
+        }
+      }
+    } else {
+      skills.push(newSkill);
+    }
+  } else {
+    skills.push(newSkill);
+  }
+}
+
 function calculateSkillLevels (s) {
   let skills = [...s];
   let skillsCounted = [];
@@ -147,10 +175,9 @@ function Character () {
   let characterClassesKeys = Object.keys(characterClasses);
   let backgroundKeys = Object.keys(characterBackgrounds);
   let psychicSkillsKeys = Object.keys(characterPsychicSkills);
-  let characterStatistics = [...characterClasses[this.class]];
-
   this.class = characterClassesKeys[Math.floor(Math.random() * characterClassesKeys.length)];
   this.background = backgroundKeys[Math.floor(Math.random() * backgroundKeys.length)];
+  let characterStatistics = [...characterClasses[this.class]];
   this.strength = characterStatistics[0];
   this.dexterity = characterStatistics[1];
   this.constitution = characterStatistics[2];
@@ -164,7 +191,7 @@ function Character () {
   this.saveEvasion = characterStatistics[9];
   this.saveMental = characterStatistics[10];
   this.effort = characterStatistics[11];
-  this.skills = [...characterBackgrounds[this.background]];
+  this.skills = [...characterBackgrounds[this.background]]; //TODO: change this to use addSkill()
   this.focuses = [...characterFocuses[this.class][Math.floor(Math.random() * characterFocuses[this.class].length)]];
   for (let i = this.focuses.length - 1; i >= 0; i--) {
     switch (this.focuses[i]) {
@@ -175,20 +202,26 @@ function Character () {
         this.armorClass += 6; // 15 + half level rounded up
         break;
       case "Psychic Training":
-        this.skills.push(psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
+        addSkill(this.skills, psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)]);
         break;
       case "Shocking Assault":
-        //TODO
+        if (this.skills.indexOf("Stab")) { // prefer Stab instead of Punch as none of the quick character templates include Punch
+          addSkill(this.skills, "Stab");
+        } else if (this.skills.indexOf("Punch")) {
+          addSkill(this.skills, "Punch");
+        } else {
+          addSkill(this.skills, ["Stab", "Punch"][Math.floor(Math.random() * 2)]);
+        }
         break;
       default:
-        this.skills.push(characterFocusSkills[this.focuses[i]]);
+        addSkill(this.skills, characterFocusSkills[this.focuses[i]]);
     }
   }  
   let bonusSkill = characterBonusSkills[Math.floor(Math.random() * characterBonusSkills.length)];
   if (bonusSkill === "Any") {
     bonusSkill = this.skills[Math.floor(Math.random() * this.skills.length)];
   }
-  this.skills.push(bonusSkill);
+  addSkill(this.skills, bonusSkill);
   if (this.class.startsWith("Psychic")) {
     let psychicSkill1 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
     let psychicSkill2 = psychicSkillsKeys[Math.floor(Math.random() * psychicSkillsKeys.length)];
@@ -203,7 +236,6 @@ function Character () {
     this.skills.push(psychicSkill2);
   }
 
-  //TODO: change 'Any Combat' skills
   //TODO: add equipment package
 
   this.skills = calculateSkillLevels(this.skills);
