@@ -98,7 +98,8 @@ const characterFocusSkills = {
   "Specialist/Notice": "Notice",
   "Specialist/Pilot": "Pilot",
   "Specialist/Sneak": "Sneak",
-  "Specialist/Talk": "Talk",  "Star Captain": "Lead",
+  "Specialist/Talk": "Talk",
+  "Star Captain": "Lead",
   "Starfarer": "Pilot",
   "Tinker": "Fix",
   "Unarmed Combatant": "Punch",
@@ -128,32 +129,34 @@ const characterBonusSkills = [
   "Any",
 ];
 
-var characterCombatSkills = [
-  "Stab",
-  "Shoot",
-  "Punch"
-];
+function arrayRemove(arr, val) { 
+  return arr.filter(function(ele){ 
+    return ele !== val; 
+  });
+}
 
 function addSkill (skills, newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]) {
   let skillCount = {};
+  let newSkillsList = [];
   skills.forEach(e => typeof skillCount[e] === "undefined" ? skillCount[e] = 1 : ++skillCount[e]);
-  //if (skills.includes(newSkill) || newSkill.startsWith("Any")) {
-  if (skills.includes(newSkill)) {
-    if (skillCount[newSkill] > 2) {
-      skills.push("New");
-      while (skills[skills.length - 1] === "New") {
-        //TODO: handle 'Any Combat' and 'X or X' skill
-        newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]; // exclude "Any"
-        if (skillCount[newSkill] < 2) { //TODO: check this; getting level-2 in output
-          skills.pop();
-          skills.push(newSkill);
-        }
-      }
-    } else {
-      skills.push(newSkill);
-    }
+  if (newSkill === "Shoot or Trade") {
+    newSkillsList = ["Shoot", "Trade"];
+    newSkill = newSkillsList[Math.floor(Math.random() * newSkillsList.length)];
+  } else if (newSkill === "Any Combat") {
+    newSkillsList = ["Stab", "Shoot", "Punch"];
+    newSkill = newSkillsList[Math.floor(Math.random() * newSkillsList.length)];
   } else {
-    skills.push(newSkill);
+    newSkillsList = characterBonusSkills.slice(0, -1); // exclude "Any"
+  }
+  newSkillsList = arrayRemove(newSkillsList, newSkill);
+  skills.push("New");
+  while (skills[skills.length - 1] === "New") {
+    if (skillCount[newSkill] >= 2) {
+      newSkill = newSkillsList[Math.floor(Math.random() * newSkillsList.length)];
+      newSkillsList = arrayRemove(newSkillsList, newSkill);
+    } else {
+      skills[skills.length - 1] = newSkill;
+    }
   }
 }
 
@@ -192,7 +195,8 @@ function Character () {
   this.saveEvasion = characterStatistics[9];
   this.saveMental = characterStatistics[10];
   this.effort = characterStatistics[11];
-  this.skills = [...characterBackgrounds[this.background]]; //TODO: change this to use addSkill()
+  this.skills = [];
+  characterBackgrounds[this.background].forEach(e => addSkill(this.skills, e));
   this.focuses = [...characterFocuses[this.class][Math.floor(Math.random() * characterFocuses[this.class].length)]];
   for (let i = this.focuses.length - 1; i >= 0; i--) {
     switch (this.focuses[i]) {
@@ -229,8 +233,8 @@ function Character () {
     } else {
       this.focuses.push(characterPsychicSkills[psychicSkill2][1]);
     }
-    this.skills.push(psychicSkill1);
-    this.skills.push(psychicSkill2);
+    addSkill(this.skills, psychicSkill1);
+    addSkill(this.skills, psychicSkill2);
   }
   this.skills = calculateSkillLevels(this.skills);
 
