@@ -136,8 +136,8 @@ function arrayRemove(arr, val) {
 }
 
 function addSkill (skills, newSkill = characterBonusSkills[Math.floor(Math.random() * (characterBonusSkills.length - 1))]) {
-  let skillCount = {};
   let newSkillsList = [];
+  let skillCount = {};
   skills.forEach(e => typeof skillCount[e] === "undefined" ? skillCount[e] = 1 : ++skillCount[e]);
   if (newSkill === "Shoot or Trade") {
     newSkillsList = ["Shoot", "Trade"];
@@ -229,12 +229,19 @@ function Character () {
     this.focuses.push(characterPsychicSkills[psychicSkill1][1]);
     if (psychicSkill1 === psychicSkill2) {
       this.focuses.push(characterPsychicSkills[psychicSkill1][0][Math.floor(Math.random() * characterPsychicSkills[psychicSkill1][0].length)]);
-      this.effort += 1; // add psychic skill level-1 to effort
     } else {
       this.focuses.push(characterPsychicSkills[psychicSkill2][1]);
     }
     addSkill(this.skills, psychicSkill1);
     addSkill(this.skills, psychicSkill2);
+    let skillCount = {};
+    this.skills.forEach(e => typeof skillCount[e] === "undefined" ? skillCount[e] = 1 : ++skillCount[e]);
+    let psychicSkills = Object.keys(characterPsychicSkills);
+    for (let i = psychicSkills.length - 1; i >= 0; i--) {
+      if (skillCount[psychicSkills[i]] >= 2) {
+        this.effort += 1;
+      }
+    }
   }
   this.skills = calculateSkillLevels(this.skills);
 
