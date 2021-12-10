@@ -106,28 +106,7 @@ const characterFocusSkills = {
   "Wanderer": "Survive"
 };
 
-const characterBonusSkills = [
-  "Administer",
-  "Connect",
-  "Exert",
-  "Fix",
-  "Heal",
-  "Know",
-  "Lead",
-  "Notice",
-  "Perform",
-  "Pilot",
-  "Program",
-  "Punch",
-  "Shoot",
-  "Sneak",
-  "Stab",
-  "Survive",
-  "Talk",
-  "Trade",
-  "Work",
-  "Any",
-];
+const characterBonusSkills = ["Administer", "Connect", "Exert", "Fix", "Heal", "Know", "Lead", "Notice", "Perform", "Pilot", "Program", "Punch", "Shoot", "Sneak", "Stab", "Survive", "Talk", "Trade", "Work", "Any"];
 
 const characterEquipmentPackages = { // equipment package, AC modifier from base of AC 10
   "Barbarian": [["Spear (1d6+1 damage)", "Backpack (TL0)", "Primitive hide armor (AC 13)", "7 days rations", "Primitive shield (+1 AC)", "20m rope", "Knife (1d4 damage)", "500 credits"], 4],
