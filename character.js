@@ -129,6 +129,19 @@ const characterBonusSkills = [
   "Any",
 ];
 
+const characterEquipmentPackages = { // equipment package, AC modifier from base of AC 10
+  "Barbarian": [["Spear (1d6+1 damage)", "Backpack (TL0)", "Primitive hide armor (AC 13)", "7 days rations", "Primitive shield (+1 AC)", "20m rope", "Knife (1d4 damage)", "500 credits"], 4],
+  "Blade":[["Monoblade sword (1d8+1 dmg)", "Backpack (TL0)", "Woven Body Armor (AC 15)", "Compad", "Secure Clothing (AC 13)", "Lazarus patch", "Thermal knife (1d6 damage)", "50 credits"], 5],
+  "Thief": [["Laser Pistol (1d6 damage)", "2 type A cells", "Armored Undersuit (AC 13)", "Backpack (TL0)", "Monoblade knife (1d6 damage)", "Compad", "Climbing harness", "Metatool", "Low-light goggles", "25 credits"], 3],
+  "Hacker": [["Laser Pistol (1d6 damage)", "2 type A cells", "Secure Clothing (AC 13)", "Dataslab", "Postech toolkit", "Metatool", "3 units of spare parts", "2 line shunts", "100 credits"], 3],
+  "Gunslinger": [["Laser Pistol (1d6 damage)", "8 type A Cells", "Armored Undersuit (AC 13)", "Backpack (TL0)", "Monoblade Knife (1d6 damage)", "Compad", "100 credits"], 3],
+  "Soldier": [["Combat Rifle (1d12 damage)", "80 rounds ammo", "Woven Body Armor (AC 15)", "Backpack (TL0)", "Knife (1d4 damage)", "Compad", "100 credits"], 5],
+  "Scout": [["Laser Rifle (1d10 damage)", "8 type A cells", "Armored vacc suit (AC 13)", "Backpack (TL0)", "Knife (1d4 damage)", "Compad", "Survey scanner", "25 credits", "Survival kit", "Binoculars (TL 3)"], 3],
+  "Medic": [["Laser Pistol (1d6 damage)", "Backpack (TL0)", "Secure Clothing (AC 13)", "Medkit", "4 Lazarus patches", "Compad", "2 doses of Lift", "Bioscanner", "25 credits"], 3],
+  "Civilian": [["Secure Clothing (AC 13)", "Compad", "700 credits"], 3],
+  "Technician": [["Laser Pistol (1d6 damage)", "4 type A cells", "Armored Undersuit (AC 13)", "Backpack (TL0)", "Monoblade knife (1d6 damage)", "Dataslab", "Postech toolkit", "Metatool", "6 units of spare parts", "200 credits"],  3]
+};
+
 function arrayRemove(arr, val) { 
   return arr.filter(function(ele){ 
     return ele !== val; 
@@ -244,6 +257,45 @@ function Character () {
     }
   }
   this.skills = calculateSkillLevels(this.skills);
-
-  //TODO: add equipment package
+  let equipmentPackage = { // package, AC modifier
+    "Barbarian": "Barbarian",
+    "Clergy": "Civilian",
+    "Courtesan": "Civilian",
+    "Criminal": "Thief",
+    "Dilettante": "Civilian",
+    "Entertainer":"Civilian",
+    "Merchant": "Civilian",
+    "Noble": "Blade",
+    "Official": "Civilian",
+    "Peasant": "Civilian",
+    "Physician": "Medic",
+    "Pilot": "Scout",
+    "Politician": "Civilian",
+    "Scholar": "Civilian",
+    "Soldier": "Soldier",
+    "Spacer": "Hacker",
+    "Technician": "Technician",
+    "Thug": "Gunslinger",
+    "Vagabond": "Civilian",
+    "Worker": "Technician"
+  };
+  switch (this.class) {
+    case "Warrior (Melee)":
+      this.equipment = characterEquipmentPackages["Blade"][0];
+      break;
+    case "Warrior (Ranged)":
+      if (this.background === "Soldier") {
+        this.equipment = characterEquipmentPackages["Soldier"][0];
+      } else {
+        this.equipment = characterEquipmentPackages["Gunslinger"][0];
+      }
+      break;
+    default:
+      this.equipment = characterEquipmentPackages[equipmentPackage[this.background]][0];
+  }
+  if (this.armorClass < 15) { // don't adjust if Ironhide
+    this.armorClass += characterEquipmentPackages[equipmentPackage[this.background]][1];
+  } else if (this.background === "Barbarian") {
+    ++this.armorClass; // add shield AC modifier
+  }
 }
